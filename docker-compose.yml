@@ -1,0 +1,19 @@
+version: "3.8"
+
+services: 
+    backend:
+        image: itaywol/$PROJECT_NAME/backend:latest
+        build: 
+            context: ./chat-backend
+        ports: 
+            - $BACKEND_PORT:$BACKEND_PORT
+            - $BACKEND_WS_PORT:$BACKEND_WS_PORT
+        container_name: "${PROJECT_NAME}_backend"
+        environment: 
+            PORT: $BACKEND_PORT
+            WS_PORT: $BACKEND_WS_PORT
+        volumes:
+            - /usr/src/app/node_modules
+            - ./chat-backend/src:/usr/src/app/src
+        command: npm run start:dev
+        
