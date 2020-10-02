@@ -12,12 +12,13 @@ import { Socket, Server } from 'socket.io';
 import { v4 as uuidv4 } from 'uuid';
 import { interval, Observable, Subject } from 'rxjs';
 import { ClientsService, Client } from './clients/clients.service';
-import { RoomsService } from './rooms/rooms.service';
-import {takeUntil} from "rxjs/operators"
+import { RoomsService, DebateTheme } from './rooms/rooms.service';
+import { takeUntil } from 'rxjs/operators';
 
 export interface ChatSocket extends Socket {
   handshake: {
     query: {
+      name: string;
       room: string;
       party: 'dems' | 'reps';
     };
@@ -34,57 +35,65 @@ export interface ChatSocket extends Socket {
 @WebSocketGateway(EnvironmentService.WS_PORT, { namespace: 'chat' })
 export class WebrtcChatGateway
   implements OnGatewayConnection, OnGatewayDisconnect {
-  constructor(private clientsService: ClientsService) {}
+  constructor(
+    private clientsService: ClientsService,
+    private roomsService: RoomsService,
+  ) {
+    this.roomsService.matchClients();
+  }
 
   @WebSocketServer() server: Server;
 
   handleConnection(@ConnectedSocket() client: ChatSocket) {
-    if (!client.handshake.query.party || !client.handshake.query.room) {
-      console.log(client.handshake.query);
+    const { room, party, name } = client?.handshake?.query;
+    if (!room || !party || !name) {
       client.disconnect();
       return;
     }
 
-    this.clientsService.pushClient({
-      clientID: client.conn.id,
+    const debateTheme: DebateTheme = this.roomsService.getThemeByName(room);
+    if (!debateTheme) {
+      client.disconnect();
+      return;
+    }
+
+    const {
+      conn: { id },
+    } = client;
+    const createClient: Client = {
+      clientID: id,
       clientSocket: client,
-      debateParty: client.handshake.query.party,
-      debateType: client.handshake.query.room,
-    });
+      debateParty: party,
+      name: name,
+    };
 
-    const stopSearchObersvable:Subject<any> = new Subject()
-
-    interval(1000).pipe(takeUntil(stopSearchObersvable)).subscribe(() => {
-      const otherClient:Client = this.clientsService.pickRandomClientByCriteria({
-        debateType: client.handshake.query.room,
-        debateParty: RoomsService.GetRoomOtherParty(
-          client.handshake.query.party,
-        ),
-      });
-
-      if(otherClient) {
-        client.leaveAll()
-        otherClient.clientSocket.leaveAll();
-        const roomName = RoomsService.generateRoom()
-
-        client.join(roomName)
-        otherClient.clientSocket.join(roomName)
-        client.to(roomName).emit("message","welcome my name is"+client.conn.id)
-        otherClient.clientSocket.to(roomName).emit("message","welcome my name is"+otherClient.clientSocket.conn.id)
-        stopSearchObersvable.next(true)
-      }
-    });
+    this.roomsService.pushClientToQueueByThemeAndParty(
+      debateTheme,
+      party,
+      createClient,
+    );
   }
 
-  handleDisconnect(@ConnectedSocket() client: Socket) {
+  handleDisconnect(@ConnectedSocket() client: ChatSocket) {
     this.clientsService.removeClient({ clientID: client.conn.id });
   }
 
   @SubscribeMessage('message')
   handleMessage(
-    @ConnectedSocket() client: Socket,
+    @ConnectedSocket() client: ChatSocket,
     @MessageBody() payload: string,
-  ): string {
-    return 'hey';
+  ) {
+    const {handshake:{query:{name}}} = client
+    this.server.to(Object.keys(client.rooms)[0]).emit('message', {name,payload});
+    return {name,payload}
+  }
+  @SubscribeMessage('typing')
+  handleTyping(
+    @ConnectedSocket() client: ChatSocket,
+    @MessageBody() payload: string,
+  ) {
+    const {handshake:{query:{name}}} = client
+    this.server.to(Object.keys(client.rooms)[0]).emit('typing', `${name} is typing`);
+    return `${name} is typing`
   }
 }
