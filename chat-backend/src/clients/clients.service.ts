@@ -5,8 +5,8 @@ import { remove as _remove } from 'lodash';
 export interface Client {
   clientSocket: Socket;
   clientID: string;
-  debateType: string;
   debateParty: string;
+  name:string
 }
 
 @Injectable()

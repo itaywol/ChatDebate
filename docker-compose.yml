@@ -1,19 +1,34 @@
 version: "3.8"
 
-services: 
-    backend:
-        image: itaywol/$PROJECT_NAME/backend:latest
-        build: 
-            context: ./chat-backend
-        ports: 
-            - $BACKEND_PORT:$BACKEND_PORT
-            - $BACKEND_WS_PORT:$BACKEND_WS_PORT
-        container_name: "${PROJECT_NAME}_backend"
-        environment: 
-            PORT: $BACKEND_PORT
-            WS_PORT: $BACKEND_WS_PORT
-        volumes:
-            - /usr/src/app/node_modules
-            - ./chat-backend/src:/usr/src/app/src
-        command: npm run start:dev
-        
+services:
+  backend:
+    image: itaywol/$PROJECT_NAME/backend:latest
+    build:
+      context: ./chat-backend
+    ports:
+      - $BACKEND_PORT:$BACKEND_PORT
+      - $BACKEND_WS_PORT:$BACKEND_WS_PORT
+    container_name: "${PROJECT_NAME}_backend"
+    environment:
+      PORT: $BACKEND_PORT
+      WS_PORT: $BACKEND_WS_PORT
+    volumes:
+      - /usr/src/app/node_modules
+      - ./chat-backend/src:/usr/src/app/src
+    command: npm run start:dev
+  frontend:
+    image: itaywol/$PROJECT_NAME/frontend:latest
+    build:
+      context: ./frontend
+    ports:
+      - 3000:3000
+    #     - $BACKEND_PORT:$BACKEND_PORT
+    #     - $BACKEND_WS_PORT:$BACKEND_WS_PORT
+    container_name: "${PROJECT_NAME}_frontend"
+    # environment:
+    #   PORT: $BACKEND_PORT
+    #   WS_PORT: $BACKEND_WS_PORT
+    volumes:
+      - /usr/src/app/node_modules
+      - ./frontend/src:/usr/src/app/src
+    command: npm start
