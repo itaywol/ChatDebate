@@ -19,6 +19,12 @@ class ChatComposer extends Component {
     this.setState({ messageBody: "" });
   };
 
+  handleKeypress = (e) => {
+    if (e.which === 13) {
+      this.sendMessage(e);
+    }
+  };
+
   render() {
     const { classes } = this.props;
     const { messageBody } = this.state;
@@ -45,6 +51,7 @@ class ChatComposer extends Component {
             placeholder={"Type a message..."}
             value={messageBody}
             onChange={this.handleInputChange}
+            onKeyPress={this.handleKeypress}
           />
         </div>
         <div className={classes.chatComposerIcons}>

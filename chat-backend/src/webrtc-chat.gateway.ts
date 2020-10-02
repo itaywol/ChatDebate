@@ -89,7 +89,6 @@ export class WebrtcChatGateway
       },
     } = client;
 
-    console.log('client', client);
     this.server
       .to(Object.keys(client.rooms)[0])
       .emit('message', { sender: name, body: payload });

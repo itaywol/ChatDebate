@@ -6,9 +6,10 @@ class MessageBox extends Component {
     super(props);
     this.state = {
       demoData: [
-        { id: 0, sender: "Tom", body: "Hello there !" },
-        { id: 1, sender: "Eden", body: "Hey how are you ?", sideRight: true },
-        { id: 0, sender: "Tom", body: "Fine, and you?" },
+        { id: 0, sender: "Tom", body: "Hello there !", sideRight: true },
+        { id: 1, sender: "Eden", body: "Hey how are you ?" },
+        { id: 0, sender: "Tom", body: "I'm great?", sideRight: true },
+        { id: 1, sender: "Eden", body: "I'M GLAD YOU PIECE OF SHIT?" },
       ],
     };
     window.socket &&
