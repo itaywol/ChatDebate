@@ -75,7 +75,7 @@ export class WebrtcChatGateway
   }
 
   handleDisconnect(@ConnectedSocket() client: ChatSocket) {
-    this.clientsService.removeClient({ clientID: client.conn.id });
+    this.roomsService.removeClient(client)
   }
 
   @SubscribeMessage('message')

@@ -13,7 +13,9 @@ export interface DebateTheme {
 
 @Injectable()
 export class RoomsService {
-  private Debates: DebateTheme[] = [{name:"demsvsreps",partyNames:["dems","reps"],partyQueues:[[],[]]}];
+  private Debates: DebateTheme[] = [
+    { name: 'demsvsreps', partyNames: ['dems', 'reps'], partyQueues: [[], []] },
+  ];
 
   get getDebateThemes() {
     return this.Debates;
@@ -44,42 +46,65 @@ export class RoomsService {
     return debateTheme.partyQueues[partyIndex];
   }
 
-  public pushClientToQueueByThemeAndParty(theme:DebateTheme,party:string,client:Client) {
-      RoomsService.getClientsQueueByParty(party,theme).push(client)
+  public pushClientToQueueByThemeAndParty(
+    theme: DebateTheme,
+    party: string,
+    client: Client,
+  ) {
+    RoomsService.getClientsQueueByParty(party, theme).push(client);
   }
 
-  public unshiftFromOtherParty(theme:DebateTheme,party:string):Client {
-    const otherParty = RoomsService.getThemeOtherParty(party,theme);
-    const clientsQueue = RoomsService.getClientsQueueByParty(otherParty,theme)
-    return clientsQueue.splice(0,1)[0]
+  public unshiftFromOtherParty(theme: DebateTheme, party: string): Client {
+    const otherParty = RoomsService.getThemeOtherParty(party, theme);
+    const clientsQueue = RoomsService.getClientsQueueByParty(otherParty, theme);
+    return clientsQueue.splice(0, 1)[0];
   }
 
   public matchClients() {
-      interval(5000).subscribe(()=>{
-          this.Debates.map(debateTheme=> {
-              const {partyQueues} = debateTheme
-              if(partyQueues[0].length && partyQueues[1].length) {
-                  let amountToRemoveFromQueues = 0
-                  partyQueues[0].map((client,index)=> {
-                    const leftQueueClient = client.clientSocket
-                    const rightQueueClient = partyQueues[1][index]?.clientSocket
-                    this.mergeClient(leftQueueClient,rightQueueClient)
-                    amountToRemoveFromQueues++
-                  })
-                  partyQueues[0].splice(0,amountToRemoveFromQueues)
-                  partyQueues[1].splice(0,amountToRemoveFromQueues)
-              }
-          })
-      })
+    interval(5000).subscribe(() => {
+      this.Debates.map(debateTheme => {
+        const { partyQueues } = debateTheme;
+        if (partyQueues[0].length && partyQueues[1].length) {
+          let amountToRemoveFromQueues = 0;
+          partyQueues[0].map((client, index) => {
+            const leftQueueClient = client.clientSocket;
+            const rightQueueClient = partyQueues[1][index]?.clientSocket;
+            this.mergeClient(leftQueueClient, rightQueueClient);
+            amountToRemoveFromQueues++;
+          });
+          partyQueues[0].splice(0, amountToRemoveFromQueues);
+          partyQueues[1].splice(0, amountToRemoveFromQueues);
+        }
+      });
+    });
   }
 
-  public mergeClient(client1:ChatSocket,client2:ChatSocket) {
-      client1.leaveAll()
-      client2.leaveAll()
-      const newPrivateRoom = uuidv4()
-      client1.join(newPrivateRoom)
-      client2.join(newPrivateRoom)
-      client1.to(newPrivateRoom).emit("message","hey theme my name is "+client1.conn.id)
-      client2.to(newPrivateRoom).emit("message","hey theme my name is "+client2.conn.id)
+  public mergeClient(client1: ChatSocket, client2: ChatSocket) {
+    client1.leaveAll();
+    client2.leaveAll();
+    const newPrivateRoom = uuidv4();
+    client1.join(newPrivateRoom);
+    client2.join(newPrivateRoom);
+    client1
+      .to(newPrivateRoom)
+      .emit('message', 'hey theme my name is ' + client1.conn.id);
+    client2
+      .to(newPrivateRoom)
+      .emit('message', 'hey theme my name is ' + client2.conn.id);
+  }
+
+  public removeClient(client: ChatSocket) {
+    this.Debates.map(debate => {
+      debate.partyQueues.map(queue => {
+        const clientToRemove = queue.filter(
+          clientNominee => clientNominee.clientID === client.conn.id,
+        )[0];
+        const indexOf = queue.indexOf(clientToRemove);
+
+        if (indexOf !== -1) {
+          queue.splice(indexOf, 1);
+        }
+      });
+    });
   }
 }
