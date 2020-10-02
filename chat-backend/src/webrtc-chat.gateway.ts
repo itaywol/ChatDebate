@@ -93,7 +93,7 @@ export class WebrtcChatGateway
     @MessageBody() payload: string,
   ) {
     const {handshake:{query:{name}}} = client
-    this.server.to(Object.keys(client.rooms)[0]).emit('typing', `${name} is typing`);
+    this.server.to(Object.keys(client.rooms)[0]).emit('typing', {name,payload:`${name} is typing`});
     return `${name} is typing`
   }
 }

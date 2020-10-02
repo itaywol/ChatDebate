@@ -22,13 +22,9 @@ services:
       context: ./frontend
     ports:
       - 3000:3000
-    #     - $BACKEND_PORT:$BACKEND_PORT
-    #     - $BACKEND_WS_PORT:$BACKEND_WS_PORT
     container_name: "${PROJECT_NAME}_frontend"
-    # environment:
-    #   PORT: $BACKEND_PORT
-    #   WS_PORT: $BACKEND_WS_PORT
     volumes:
       - /usr/src/app/node_modules
       - ./frontend/src:/usr/src/app/src
-    command: npm start
+    command: npm start 
+    stdin_open: true
