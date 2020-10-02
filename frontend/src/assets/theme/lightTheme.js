@@ -6,7 +6,7 @@ const lightTheme = createMuiTheme({
   },
   typography: {
     body1: {
-      lineHeight: 1.2,
+      lineHeight: 1.3,
     },
     fontFamily: [
       "Poppins",

@@ -75,7 +75,7 @@ export class WebrtcChatGateway
   }
 
   handleDisconnect(@ConnectedSocket() client: ChatSocket) {
-    this.roomsService.removeClient(client)
+    this.roomsService.removeClient(client);
   }
 
   @SubscribeMessage('message')
@@ -83,17 +83,32 @@ export class WebrtcChatGateway
     @ConnectedSocket() client: ChatSocket,
     @MessageBody() payload: string,
   ) {
-    const {handshake:{query:{name}}} = client
-    this.server.to(Object.keys(client.rooms)[0]).emit('message', {name,payload});
-    return {name,payload}
+    const {
+      handshake: {
+        query: { name },
+      },
+    } = client;
+
+    console.log('client', client);
+    this.server
+      .to(Object.keys(client.rooms)[0])
+      .emit('message', { sender: name, body: payload });
+
+    return { sender: name, body: payload };
   }
   @SubscribeMessage('typing')
   handleTyping(
     @ConnectedSocket() client: ChatSocket,
     @MessageBody() payload: string,
   ) {
-    const {handshake:{query:{name}}} = client
-    this.server.to(Object.keys(client.rooms)[0]).emit('typing', {name,payload:`${name} is typing`});
-    return `${name} is typing`
+    const {
+      handshake: {
+        query: { name },
+      },
+    } = client;
+    this.server
+      .to(Object.keys(client.rooms)[0])
+      .emit('typing', { name, payload: `${name} is typing` });
+    return `${name} is typing`;
   }
 }

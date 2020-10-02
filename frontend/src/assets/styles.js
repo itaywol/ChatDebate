@@ -1,3 +1,5 @@
+import { requirePropFactory } from "@material-ui/core";
+
 const useStyles = (theme) => ({
   // myCustomClass: {
   //   color: theme.status.danger,
@@ -23,15 +25,22 @@ const useStyles = (theme) => ({
     display: "flex",
     marginTop: 25,
   },
-  // chatAsCards: {
-  //   display: "flex",
-  //   justifyContent: "center",
-  //   alignItems: "center",
-  //   backgroundColor: "grey",
-  //   width: "100%",
-  //   height: "100%",
-  //   margin: "0px 10px",
-  // },
+  chatAsLeft: {
+    "&:hover": {
+      background:
+        "linear- gradient(0deg, rgba(255, 255, 255, 1) 0 %, rgba(81, 96, 176, 1) 50 %, rgba(255, 255, 255, 1) 100 %) !important",
+      transform: "translate3d(0,-10px,0) !important",
+      boxShadow:
+        "0 14px 28px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.22) !important",
+    },
+  },
+  chatAsRight: {
+    "&:hover": {
+      backgroundColor: "red",
+      transform: "translate3d(0,-10px,0)",
+      boxShadow: "0 14px 28px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.22)",
+    },
+  },
   chatAsCard: {
     width: 200,
     height: 150,
@@ -48,7 +57,6 @@ const useStyles = (theme) => ({
     justifyContent: "center",
     alignItems: "center",
     "&:hover": {
-      backgroundColor: "red",
       transform: "translate3d(0,-10px,0)",
       boxShadow: "0 14px 28px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.22)",
     },
@@ -65,7 +73,7 @@ const useStyles = (theme) => ({
     display: "flex",
     padding: "0px 20px",
     alignItems: "center",
-    height: 50,
+    height: 60,
     width: "100%",
     borderBottom: "1px solid grey",
   },
@@ -83,7 +91,20 @@ const useStyles = (theme) => ({
     height: "100%",
     display: "flex",
     flexDirection: "column",
-    backgroundColor: "lightgrey",
+    // backgroundColor: "lightgrey",
+  },
+  messageBoxBackgroundImage: {
+    backgroundImage:
+      "url(https://c7.alamy.com/comp/W7K6KY/elephant-and-donkey-usa-pattern-seamless-republican-and-democrat-party-america-background-vector-texture-W7K6KY.jpg)",
+    backgroundRepeat: "no-repeat",
+    backgroundAttachment: "fixed",
+    backgroundSize: "cover",
+    width: "100%",
+    height: "100%",
+    position: "fixed",
+    opacity: 0.1,
+    userSelect: "none",
+    WebkitUserSelect: "none",
   },
   messageWrapper: {
     margin: "5px 5px 5px 10px",
@@ -92,6 +113,10 @@ const useStyles = (theme) => ({
     borderRadius: 7,
     backgroundColor: "grey",
     width: "max-content",
+    zIndex: 10,
+  },
+  messageRightSide: {
+    marginLeft: "auto",
   },
   // ChatComposer
   ChatComposerWrapper: {
@@ -103,6 +128,8 @@ const useStyles = (theme) => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    position: "relative",
+    zIndex: 10,
   },
   chatComposerContent: {
     display: "flex",
@@ -114,7 +141,30 @@ const useStyles = (theme) => ({
   },
   chatComposerIcons: {
     display: "flex",
-    margin: "0 auto",
+    margin: "0px 5px",
+    "& button": {
+      width: 40,
+      height: 40,
+    },
+  },
+  chatComposerSend: {
+    transition: "0.3s all",
+    color: "blue",
+  },
+  // NavBar
+  navBarWrapper: {
+    paddingLeft: 20,
+    position: "fixed",
+    top: 0,
+    display: "flex",
+    alignItems: "center",
+    width: "100%",
+    height: 50,
+    background: "grey",
+  },
+  navItem: {
+    cursor: "pointer",
+    paddingLeft: 20,
   },
 });
 

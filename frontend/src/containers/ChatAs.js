@@ -2,6 +2,7 @@ import React from "react";
 import { Typography } from "@material-ui/core";
 import ChatAsCard from "../components/ChatAsCard";
 import { ROUTERPATHS } from "../constants";
+
 const ChatAs = ({ classes, history, location, match, staticContext }) => {
   const moveToChatRoute = () => {
     history.push(ROUTERPATHS.CHAT);

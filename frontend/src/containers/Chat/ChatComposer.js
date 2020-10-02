@@ -12,6 +12,13 @@ class ChatComposer extends Component {
     this.setState({ messageBody: e.target.value });
   };
 
+  sendMessage = (e) => {
+    e.preventDefault();
+    const { messageBody } = this.state;
+    window.socket.emit("message", messageBody);
+    this.setState({ messageBody: "" });
+  };
+
   render() {
     const { classes } = this.props;
     const { messageBody } = this.state;
@@ -41,7 +48,11 @@ class ChatComposer extends Component {
           />
         </div>
         <div className={classes.chatComposerIcons}>
-          <IconButton>
+          <IconButton
+            disabled={this.state.messageBody.length < 1 && true}
+            onClick={this.sendMessage}
+            className={classes.chatComposerSend}
+          >
             <SendIcon />
           </IconButton>
           <IconButton>

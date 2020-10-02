@@ -2,28 +2,41 @@ import React, { Component } from "react";
 import Message from "./Message";
 
 class MessageBox extends Component {
-  state = {
-    demoData: [
-      { id: 1, sender: "Tom", body: "Hello there !" },
-      { id: 2, sender: "Eden", body: "Hey how are you ?" },
-      { id: 3, sender: "Tom", body: "Fine, and you?" },
-    ],
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      demoData: [
+        { id: 0, sender: "Tom", body: "Hello there !" },
+        { id: 1, sender: "Eden", body: "Hey how are you ?", sideRight: true },
+        { id: 0, sender: "Tom", body: "Fine, and you?" },
+      ],
+    };
+    window.socket &&
+      window.socket.on("message", (data) => {
+        const { demoData } = this.state;
+        let updatedMessages = [...demoData];
+        updatedMessages.push(data);
 
-  // appendNewMessage = (e) => {
-  //   const payload = {
-  //     id:
-  //   }
-  // }
+        this.setState({ demoData: updatedMessages });
+      });
+  }
 
   render() {
     const { classes } = this.props;
     const { demoData } = this.state;
+
     return (
       <div className={classes.messageBoxWrapper}>
-        {demoData.map((msg) => (
-          <Message key={msg.id} classes={classes} msgData={msg} />
-        ))}
+        <div className={classes.messageBoxBackgroundImage} />
+        <div style={{ position: "relative", paddingTop: 10 }}>
+          {demoData.map((msg) => (
+            <Message
+              key={msg.sender + msg.body}
+              classes={classes}
+              msgData={msg}
+            />
+          ))}
+        </div>
       </div>
     );
   }
