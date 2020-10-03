@@ -107,7 +107,7 @@ export class WebrtcChatGateway
     } = client;
     this.server
       .to(Object.keys(client.rooms)[0])
-      .emit('typing', { name, payload: `${name} is typing` });
+      .emit('typing', { sender:name, body: `${name} is typing` });
     return `${name} is typing`;
   }
 }

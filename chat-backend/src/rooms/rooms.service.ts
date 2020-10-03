@@ -87,10 +87,10 @@ export class RoomsService {
     client2.join(newPrivateRoom);
     client1
       .to(newPrivateRoom)
-      .emit('message', 'Hey there my name is ' + client1.handshake.query.name);
+      .emit('message', {sender:client1.handshake.query.name,body:'Hey there my name is ' + client1.handshake.query.name});
     client2
       .to(newPrivateRoom)
-      .emit('message', 'Hey there my name is ' + client2.handshake.query.name);
+      .emit('message', {sender:client2.handshake.query.name,body:'Hey there my name is ' + client2.handshake.query.name});
   }
 
   public removeClient(client: ChatSocket) {
