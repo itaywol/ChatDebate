@@ -4,6 +4,7 @@ import { Client } from '../clients/clients.service';
 import { interval } from 'rxjs';
 import { throwIfEmpty } from 'rxjs/operators';
 import { ChatSocket } from '../webrtc-chat.gateway';
+import { Server } from 'socket.io';
 
 export interface DebateTheme {
   name: string;
@@ -106,5 +107,9 @@ export class RoomsService {
         }
       });
     });
+
+  }
+  public notifyDisconnection(server:Server,client:ChatSocket) {
+    server.to(Object.keys(client.rooms)[0]).emit("disconnect")
   }
 }

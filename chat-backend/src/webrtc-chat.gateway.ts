@@ -75,6 +75,7 @@ export class WebrtcChatGateway
   }
 
   handleDisconnect(@ConnectedSocket() client: ChatSocket) {
+    this.roomsService.notifyDisconnection(this.server, client);
     this.roomsService.removeClient(client);
   }
 
@@ -95,6 +96,7 @@ export class WebrtcChatGateway
 
     return { sender: name, body: payload };
   }
+
   @SubscribeMessage('typing')
   handleTyping(
     @ConnectedSocket() client: ChatSocket,
@@ -107,7 +109,7 @@ export class WebrtcChatGateway
     } = client;
     this.server
       .to(Object.keys(client.rooms)[0])
-      .emit('typing', { sender:name, body: `${name} is typing` });
+      .emit('typing', { sender: name, body: `${name} is typing` });
     return `${name} is typing`;
   }
 }
