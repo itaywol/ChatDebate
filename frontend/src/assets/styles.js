@@ -11,11 +11,21 @@ const useStyles = (theme) => ({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#FFFFFF",
-    height: "100vh",
+    height: "100%",
     width: "100%",
     overflowX: "hidden",
   },
   //ChatAs.js
+  chatAsWrapper: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 30,
+  },
+  textInput: {
+    width: 250,
+  },
   chatAsTitle: {
     justifyContent: "center",
     alignItems: "center",
@@ -25,40 +35,37 @@ const useStyles = (theme) => ({
     display: "flex",
     marginTop: 25,
   },
-  chatAsLeft: {
-    "&:hover": {
-      background:
-        "linear- gradient(0deg, rgba(255, 255, 255, 1) 0 %, rgba(81, 96, 176, 1) 50 %, rgba(255, 255, 255, 1) 100 %) !important",
-      transform: "translate3d(0,-10px,0) !important",
-      boxShadow:
-        "0 14px 28px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.22) !important",
-    },
-  },
-  chatAsRight: {
-    "&:hover": {
-      backgroundColor: "red",
-      transform: "translate3d(0,-10px,0)",
-      boxShadow: "0 14px 28px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.22)",
-    },
+  chatAsSelected: {
+    color: "red",
   },
   chatAsCard: {
-    width: 200,
-    height: 150,
+    width: 150,
+    height: 100,
     WebkitTransition: "all .3s",
     transition: "all .3s",
     cursor: "pointer",
     position: "relative",
     zIndex: 5,
     boxShadow: "0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.24)",
-    borderRadius: "0 20px 0 20px",
+    borderRadius: 10,
     margin: "10px 30px",
     fontSize: 20,
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     "&:hover": {
-      transform: "translate3d(0,-10px,0)",
-      boxShadow: "0 14px 28px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.22)",
+      transform: "translate3d(0,-5px,0)",
+      boxShadow: "0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)"
+    },
+  },
+  chatAsCardLeft: {
+    "&:hover": {
+      color: 'red'
+    },
+  },
+  chatAsCardRight: {
+    "&:hover": {
+      color: 'blue'
     },
   },
   // Chat.js
@@ -91,20 +98,15 @@ const useStyles = (theme) => ({
     height: "100%",
     display: "flex",
     flexDirection: "column",
-    // backgroundColor: "lightgrey",
-  },
-  messageBoxBackgroundImage: {
-    backgroundImage:
-      "url(https://c7.alamy.com/comp/W7K6KY/elephant-and-donkey-usa-pattern-seamless-republican-and-democrat-party-america-background-vector-texture-W7K6KY.jpg)",
+    overflowY: "auto",
+    height: "calc(100% - 51px)",
+    position: "relative",
+    zIndex: 10,
+    backgroundImage: `url(` + require(`../assets/backgrounds/RepsVsDemsBg.jpg`) + `)`,
     backgroundRepeat: "no-repeat",
-    backgroundAttachment: "fixed",
+    // backgroundAttachment: "fixed",
     backgroundSize: "cover",
-    width: "100%",
-    height: "100%",
-    position: "fixed",
-    opacity: 0.1,
-    userSelect: "none",
-    WebkitUserSelect: "none",
+    // backgroundPosition: "50%",
   },
   messageWrapper: {
     margin: "5px 5px 5px 10px",
@@ -114,6 +116,7 @@ const useStyles = (theme) => ({
     backgroundColor: "grey",
     width: "max-content",
     zIndex: 10,
+    alignItems: 'center'
   },
   messageRightSide: {
     marginLeft: "auto",
@@ -154,8 +157,8 @@ const useStyles = (theme) => ({
   // NavBar
   navBarWrapper: {
     paddingLeft: 20,
-    position: "fixed",
-    top: 0,
+    // position: "fixed",
+    // top: 0,
     display: "flex",
     alignItems: "center",
     width: "100%",

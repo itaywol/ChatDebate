@@ -2,7 +2,7 @@ import React from "react";
 import { Typography } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
 
-const ChatHeader = ({ classes }) => {
+const ChatHeader = ({ classes, nickname, side }) => {
   return (
     <div className={classes.headerWrapper}>
       <Avatar classes={{ root: classes.headerAvatar }}>T</Avatar>

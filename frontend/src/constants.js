@@ -4,6 +4,11 @@ export const ROUTERPATHS = {
   ROOT: "/",
 };
 
+export const SIDES = {
+  LEFT: "dems",
+  RIGHT: "reps"
+}
+
 // NOTIFICATIONS
 // export const NOTIFICATION_TYPES = {
 //   CHANGE: "change",

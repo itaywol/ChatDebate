@@ -6,23 +6,21 @@ import Chat from "./containers/Chat/Chat";
 import NavBar from "./containers/Navigation/NavBar";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ROUTERPATHS } from "./constants";
-import io from "socket.io-client";
 
 class App extends Component {
-  componentDidMount() {
-    const socket = io.connect(
-      "ws://localhost:4001/chat?room=demsvsreps&party=dems&name=Eden"
-    );
-    window.socket = socket;
+  state = {
+    nickname: "",
+    side: "",
+    showNavbar: true
+  };
 
-    window.socket.on("connect", function () {
-      console.log("connected");
-    });
-  }
+  setNickname = (nickname) => this.setState({ nickname });
+  setSide = (side) => this.setState({ side });
+  hideNavBar = () => this.setState({showNavbar: false})
 
   render() {
     const { classes } = this.props;
-
+    const { nickname, side, showNavbar } = this.state;
     return (
       <div
         style={{
@@ -33,18 +31,34 @@ class App extends Component {
           flexDirection: "column",
         }}
       >
-        {/* <NavBar classes={classes} /> */}
-
+        { showNavbar && <NavBar classes={classes} />}
         <div className={classes.appWrapper}>
           <Router>
             <Switch>
               <Route
                 path={ROUTERPATHS.CHAT}
-                render={(props) => <Chat classes={classes} {...props} />}
+                render={(props) => (
+                  <Chat
+                    classes={classes}
+                    nickname={nickname}
+                    side={side}
+                    hideNavBar={this.hideNavBar}
+                    {...props}
+                  />
+                )}
               />
               <Route
                 path={ROUTERPATHS.ROOT}
-                render={(props) => <ChatAs classes={classes} {...props} />}
+                render={(props) => (
+                  <ChatAs
+                    classes={classes}
+                    nickname={nickname}
+                    side={side}
+                    setNickname={this.setNickname}
+                    setSide={this.setSide}
+                    {...props}
+                  />
+                )}
               />
             </Switch>
           </Router>
