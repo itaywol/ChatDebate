@@ -6,18 +6,7 @@ class MessageBox extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      demoData: [
-        // { id: 0, sender: "Tom", body: "Hello there !", sideRight: true },
-        // { id: 1, sender: "Eden", body: "Hey how are you ?" },
-        // { id: 2, sender: "Tomdsa", body: "Hello there !", sideRight: true },
-        // { id: 3, sender: "Eddsaen", body: "Hey how are you ?" },
-        // { id: 4, sender: "Toam", body: "Hello there !", sideRight: true },
-        // { id: 5, sender: "Edsaddsaen", body: "Hey how are you ?" },
-        // { id: 6, sender: "Tdsam", body: "Hello there !", sideRight: true },
-        // { id: 7, sender: "Eddsaen", body: "Hey how are you ?" },
-        // { id: 8, sender: "Tovzm", body: "Hello there !", sideRight: true },
-        // { id: 9, sender: "Edxen", body: "Hey how are you ?" },
-      ],
+      demoData: [],
       shouldScrollBottom: true,
     };
 
@@ -39,17 +28,12 @@ class MessageBox extends Component {
     }
   }
 
-
-  
-
   handleScroll = (e) => {
     const { shouldScrollBottom } = this.state;
-    const { target }= e;
+    const { target } = e;
     
-
     if(!target) return;
     const offset = 60;
-
 
     if((target.scrollHeight - target.scrollTop >= target.clientHeight + offset) && shouldScrollBottom ) {
       console.log("NOT")

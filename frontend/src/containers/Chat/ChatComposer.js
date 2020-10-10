@@ -9,6 +9,7 @@ class ChatComposer extends Component {
   };
 
   handleInputChange = (e) => {
+    window.socket && window.socket.emit("typing");
     this.setState({ messageBody: e.target.value });
   };
 

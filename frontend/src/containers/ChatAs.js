@@ -16,6 +16,10 @@ const ChatAs = ({
   setSide,
 }) => {
   
+  // const renewChat = (e) => {
+
+  // }
+
   const moveToChatRoute = (e, side) => {
     if (e) {
       e.preventDefault();

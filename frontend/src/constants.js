@@ -6,7 +6,12 @@ export const ROUTERPATHS = {
 
 export const SIDES = {
   LEFT: "dems",
-  RIGHT: "reps"
+  RIGHT: "reps",
+}
+
+export const STRINGS = {
+  LEFT_HEADER: "Democrate",
+  RIGHT_HEADER: "Republican",
 }
 
 // NOTIFICATIONS
