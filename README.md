@@ -42,9 +42,8 @@ Socket.listen("typing",()=>{/* DO SOMETHING WITH THE TYPING LIKE ... CHANGING TH
 TODO LIST: 
 1. We need to get an identifier from socket IO - we need to always render the messages of the current user on the left side, while rendering the messages of the other user on the right side
 2. ***Allow communication between 2 users***
-3. Background image replacement
 4. Navigation Bar (Icon on the left, HOME, ABOUT, on the right side EXIT icon which will lead the user back to the ROOT path, and NEXT button for the next conversation
-5. When leaving chat room => close socket connection
+5. When leaving chat room => close socket connection (socket.disconnect() => show spinner + search for the next person)
 6. Advertisement: Facebook for business, google, SEO, data traffic, discord
 
 API:
