@@ -43,6 +43,7 @@ class App extends Component {
                     nickname={nickname}
                     side={side}
                     hideNavBar={this.hideNavBar}
+                    setSide={this.setSide}
                     {...props}
                   />
                 )}

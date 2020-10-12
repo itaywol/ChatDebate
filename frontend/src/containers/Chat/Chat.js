@@ -2,13 +2,14 @@ import React, { Component } from "react";
 import Header from "./ChatHeader";
 import MessageBox from "./MessageBox";
 import ChatComposer from "./ChatComposer";
-
+import Loader from '../../components/Loader';
 class Chat extends Component {
 
   constructor(props) {
     super(props)
     this.state = {
-      typingString: ""
+      typingString: "",
+      loading: false
     }
 
     window.socket && window.socket.on("typing", ({ sender, body }) => {
@@ -25,11 +26,16 @@ class Chat extends Component {
   }
 
   render() {
-    const { classes, nickname, side } = this.props;
-    const { typingString } = this.state;
+    const { classes, nickname, side, history, setSide } = this.props;
+    const { typingString, loading } = this.state;
+
+    if(loading) {
+      return <Loader label={'Loading Page'}/>
+    }
+
     return (
       <div className={classes.chatWrapper}>
-        <Header classes={classes} nickname={nickname} side={side} typingString={typingString} />
+        <Header classes={classes} nickname={nickname} side={side} typingString={typingString} history={history} setSide={setSide} />
         <MessageBox classes={classes} nickname={nickname} side={side} />
         <ChatComposer classes={classes} nickname={nickname} side={side} typingString={typingString} />
       </div>

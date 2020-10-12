@@ -21,7 +21,30 @@ const useStyles = (theme) => ({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 30,
+    backgroundImage: `url(` + require(`../assets/backgrounds/ChatAsWhitejpg.jpg`) + `)`,
+    backgroundRepeat: "no-repeat",
+    // backgroundAttachment: "fixed",
+    backgroundSize: "cover",
+    backgroundPosition: "50%",
+    height: "100%",
+    width: "100%",
+  },
+  chatAsContent: {
+    display: "flex",
+    flexDirection: "column",
+    background: "rgb(38 8 1 / 16%)",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 50,
+    borderRadius: 25,
+    border: "2px solid brown",
+    "& p": {
+      color: "#fff"
+    },
+    '&:placeholder': {
+      textOverflow: 'ellipsis !important',
+      color: 'blue'
+    }
   },
   textInput: {
     width: 250,
@@ -30,6 +53,7 @@ const useStyles = (theme) => ({
     justifyContent: "center",
     alignItems: "center",
     textAlign: "center",
+    marginTop: 20
   },
   chatAsCardsWrapper: {
     display: "flex",

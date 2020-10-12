@@ -8,8 +8,16 @@ class ChatComposer extends Component {
     messageBody: "",
   };
 
+  // aaaaa = > ""
+  
   handleInputChange = (e) => {
-    window.socket && window.socket.emit("typing");
+    const updatedMessageBody = e.target.value;
+    if(this.state.messageBody !== updatedMessageBody && updatedMessageBody === "") {
+      // window.socket && window.socket.emit("typingDone");
+      // should be called from backend - whenever calling typing - after 4 seconds of timeout - invoke typingDone automatically from there
+    } else {
+      window.socket && window.socket.emit("typing");
+    }
     this.setState({ messageBody: e.target.value });
   };
 

@@ -4,6 +4,7 @@ import ChatAsCard from "../components/ChatAsCard";
 import { ROUTERPATHS, SIDES } from "../constants";
 import { Button, TextField, FormControl } from "@material-ui/core";
 import io from "socket.io-client";
+
 const ChatAs = ({
   classes,
   history,
@@ -47,8 +48,9 @@ const ChatAs = ({
   };
 
   return (
+    <div className={classes.chatAsWrapper}>
     <form
-      className={classes.chatAsWrapper}
+      className={classes.chatAsContent}
     >
       <TextField
         required={true}
@@ -79,6 +81,7 @@ const ChatAs = ({
         />
       </div>
     </form>
+    </div>
   );
 };
 
