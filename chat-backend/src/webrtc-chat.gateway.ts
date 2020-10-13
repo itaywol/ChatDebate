@@ -13,7 +13,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { interval, Observable, Subject } from 'rxjs';
 import { ClientsService, Client } from './clients/clients.service';
 import { RoomsService, DebateTheme } from './rooms/rooms.service';
-import { takeUntil } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 
 export interface ChatSocket extends Socket {
   handshake: {
@@ -72,6 +72,7 @@ export class WebrtcChatGateway
       party,
       createClient,
     );
+    return id
   }
 
   handleDisconnect(@ConnectedSocket() client: ChatSocket) {
@@ -94,13 +95,13 @@ export class WebrtcChatGateway
       .to(Object.keys(client.rooms)[0])
       .emit('message', { sender: name, body: payload });
 
-    return { sender: name, body: payload };
+    return { sender: name,senderId:client.id, body: payload };
   }
 
   @SubscribeMessage('typing')
   handleTyping(
     @ConnectedSocket() client: ChatSocket,
-    @MessageBody() payload: string,
+    @MessageBody() payload: boolean,
   ) {
     const {
       handshake: {
@@ -109,7 +110,18 @@ export class WebrtcChatGateway
     } = client;
     this.server
       .to(Object.keys(client.rooms)[0])
-      .emit('typing', { sender: name, body: `${name} is typing` });
+      .emit('typing', { sender: name,senderId:client.id, body: `${name} is typing` });
+    interval(5000)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.server
+          .to(Object.keys(client.rooms)[0])
+          .emit('stop-typing', {
+            sender: name,
+            senderId:client.id,
+            body: `${name} has stopped typing`,
+          });
+      });
     return `${name} is typing`;
   }
 }

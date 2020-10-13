@@ -68,10 +68,18 @@ export class RoomsService {
         if (partyQueues[0].length && partyQueues[1].length) {
           let amountToRemoveFromQueues = 0;
           partyQueues[0].map((client, index) => {
-            const leftQueueClient = client.clientSocket;
-            const rightQueueClient = partyQueues[1][index]?.clientSocket;
-            this.mergeClient(leftQueueClient, rightQueueClient);
-            amountToRemoveFromQueues++;
+            const leftQueueClient = client;
+            const rightQueueClient = partyQueues[1][index];
+            if (leftQueueClient.name !== rightQueueClient.name) {
+              this.mergeClient(
+                leftQueueClient?.clientSocket,
+                rightQueueClient?.clientSocket,
+              );
+              amountToRemoveFromQueues++;
+            } else {
+              partyQueues[0].push(partyQueues[0].splice(index,1)[0])
+              partyQueues[1].push(partyQueues[1].splice(index,1)[0])
+            }
           });
           partyQueues[0].splice(0, amountToRemoveFromQueues);
           partyQueues[1].splice(0, amountToRemoveFromQueues);
@@ -88,10 +96,18 @@ export class RoomsService {
     client2.join(newPrivateRoom);
     client1
       .to(newPrivateRoom)
-      .emit('message', {sender:client1.handshake.query.name,body:'Hey there my name is ' + client1.handshake.query.name});
+      .emit('connect', {
+        sender: client1.handshake.query.name,
+        senderId: client1.id,
+        body: 'Hey there my name is ' + client1.handshake.query.name,
+      });
     client2
       .to(newPrivateRoom)
-      .emit('message', {sender:client2.handshake.query.name,body:'Hey there my name is ' + client2.handshake.query.name});
+      .emit('connect', {
+        sender: client2.handshake.query.name,
+        senderId: client2.id,
+        body: 'Hey there my name is ' + client2.handshake.query.name,
+      });
   }
 
   public removeClient(client: ChatSocket) {
@@ -107,9 +123,8 @@ export class RoomsService {
         }
       });
     });
-
   }
-  public notifyDisconnection(server:Server,client:ChatSocket) {
-    server.to(Object.keys(client.rooms)[0]).emit("disconnect")
+  public notifyDisconnection(server: Server, client: ChatSocket) {
+    server.to(Object.keys(client.rooms)[0]).emit('disconnect');
   }
 }
