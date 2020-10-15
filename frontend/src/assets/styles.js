@@ -21,7 +21,8 @@ const useStyles = (theme) => ({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    backgroundImage: `url(` + require(`../assets/backgrounds/ChatAsWhitejpg.jpg`) + `)`,
+    backgroundImage:
+      `url(` + require(`../assets/backgrounds/ChatAsWhitejpg.jpg`) + `)`,
     backgroundRepeat: "no-repeat",
     // backgroundAttachment: "fixed",
     backgroundSize: "cover",
@@ -32,19 +33,21 @@ const useStyles = (theme) => ({
   chatAsContent: {
     display: "flex",
     flexDirection: "column",
-    background: "rgb(38 8 1 / 16%)",
+    background: "#fff",
     alignItems: "center",
     justifyContent: "center",
-    padding: 50,
+    padding: "20px 15px 30px 15px",
     borderRadius: 25,
-    border: "2px solid brown",
+    border: "2px solid #00000075",
+    boxShadow: "0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)",
+
     "& p": {
-      color: "#fff"
+      // color: "#fff"
     },
-    '&:placeholder': {
-      textOverflow: 'ellipsis !important',
-      color: 'blue'
-    }
+    "&:placeholder": {
+      textOverflow: "ellipsis !important",
+      color: "blue",
+    },
   },
   textInput: {
     width: 250,
@@ -53,7 +56,7 @@ const useStyles = (theme) => ({
     justifyContent: "center",
     alignItems: "center",
     textAlign: "center",
-    marginTop: 20
+    marginTop: 20,
   },
   chatAsCardsWrapper: {
     display: "flex",
@@ -79,17 +82,17 @@ const useStyles = (theme) => ({
     alignItems: "center",
     "&:hover": {
       transform: "translate3d(0,-5px,0)",
-      boxShadow: "0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)"
+      boxShadow: "0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)",
     },
   },
   chatAsCardLeft: {
     "&:hover": {
-      color: 'red'
+      color: "red",
     },
   },
   chatAsCardRight: {
     "&:hover": {
-      color: 'blue'
+      color: "blue",
     },
   },
   // Chat.js
@@ -126,7 +129,8 @@ const useStyles = (theme) => ({
     height: "calc(100% - 51px)",
     position: "relative",
     zIndex: 10,
-    backgroundImage: `url(` + require(`../assets/backgrounds/RepsVsDemsBg.jpg`) + `)`,
+    backgroundImage:
+      `url(` + require(`../assets/backgrounds/RepsVsDemsBg.jpg`) + `)`,
     backgroundRepeat: "no-repeat",
     // backgroundAttachment: "fixed",
     backgroundSize: "cover",
@@ -140,7 +144,7 @@ const useStyles = (theme) => ({
     backgroundColor: "grey",
     width: "max-content",
     zIndex: 10,
-    alignItems: 'center'
+    alignItems: "center",
   },
   messageRightSide: {
     marginLeft: "auto",
