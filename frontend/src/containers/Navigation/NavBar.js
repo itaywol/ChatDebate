@@ -8,9 +8,12 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+import {withRouter} from 'react-router'
+import { ROUTERPATHS } from "../../constants";
+
 class NavBar extends Component {
   render() {
-    const { classes } = this.props;
+    const { classes, history } = this.props;
     return (
       // <div className={classes.navBarWrapper}>
       //   <IconButton>
@@ -20,8 +23,8 @@ class NavBar extends Component {
       //   <NavItem title={"Home"} classes={classes} />
       //   <NavItem title={"About"} classes={classes} />
       // </div>
-      <AppBar position="static">
-        <Toolbar>
+      <AppBar position="fixed" classes={{root: classes.navBarToolbar}}>
+        <Toolbar >
           {/* <IconButton
             edge="start"
             className={classes.menuButton}
@@ -35,9 +38,9 @@ class NavBar extends Component {
           </Typography>
 
           <nav style={{ marginLeft: "auto" }}>
-            <Button color="inherit">Home</Button>
-            <Button color="inherit">Rooms</Button>
-            <Button color="inherit">About</Button>
+            <Button color="inherit" onClick={() => history.push(ROUTERPATHS.ROOT)}>Home</Button>
+            <Button color="inherit" >Rooms</Button>
+            <Button color="inherit" onClick={() => history.push(ROUTERPATHS.ABOUT)}>About</Button>
           </nav>
         </Toolbar>
       </AppBar>
@@ -45,4 +48,4 @@ class NavBar extends Component {
   }
 }
 
-export default NavBar;
+export default withRouter(NavBar);

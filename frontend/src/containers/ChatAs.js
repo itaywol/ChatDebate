@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Typography } from "@material-ui/core";
 import ChatAsCard from "../components/ChatAsCard";
-import { ROUTERPATHS, SIDES } from "../constants";
+import { ROUTERPATHS, SIDES, STRINGS } from "../constants";
 import { Button, TextField, FormControl } from "@material-ui/core";
 import { socket, initSocket } from "../socketUtils";
 import SVG from "../assets/icons";
@@ -70,15 +70,13 @@ const ChatAs = ({
 
         <div className={classes.chatAsCardsWrapper}>
           <ChatAsCard
-            title={"Democrate"}
             classes={classes}
-            selected={side === SIDES.LEFT}
+            title={STRINGS.LEFT_HEADER}
             onClick={(e) => moveToChatRoute(e, SIDES.LEFT)}
           />
           <ChatAsCard
-            title={"Republican"}
             classes={classes}
-            selected={side === SIDES.RIGHT}
+            title={STRINGS.RIGHT_HEADER}
             onClick={(e) => moveToChatRoute(e, SIDES.RIGHT)}
           />
         </div>

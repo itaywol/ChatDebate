@@ -7,9 +7,11 @@ const Loader = ({ label }) => {
     <div
       style={{
         display: "flex",
+        color: '#fff',
         flexDirection: 'column',
-        background: "#00000029",
+        background: "#00000060",
         position: 'fixed',
+        zIndex: 99999999,
         top: 0,
         width: "100vw",
         height: "100vh",

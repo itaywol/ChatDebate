@@ -49,12 +49,14 @@ class Chat extends Component {
     const { classes, nickname, side, history, setSide, activeId } = this.props;
     const { typingString, loading, messages, roomName } = this.state;
 
-    if (loading) {
-      return <Loader label={"Loading Page"} />;
-    }
+    // if (loading) {
+    //   return 
+    // }
 
     return (
+      
       <div className={classes.chatWrapper}>
+        {loading && <Loader label={"Loading Page"} />}
         <Header
           classes={classes}
           nickname={nickname}

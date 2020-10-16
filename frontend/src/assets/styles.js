@@ -75,6 +75,18 @@ const useStyles = (theme) => ({
     display: "flex",
     marginTop: 25,
   },
+  chatAsLeft: {
+    '&:hover': {
+      background: "#0278ae",
+      color: "#fff"
+    }
+  },
+  chatAsRight: {
+    '&:hover': {
+      background: "#bb2205",
+      color: "#fff"
+    }
+  },
   chatAsSelected: {
     color: "red",
   },
@@ -205,6 +217,9 @@ const useStyles = (theme) => ({
     width: "100%",
     height: 50,
     background: "grey",
+  },
+  navBarToolbar: {
+    top: 0
   },
   navItem: {
     cursor: "pointer",

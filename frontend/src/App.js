@@ -33,9 +33,11 @@ class App extends Component {
           flexDirection: "column",
         }}
       >
-        {showNavbar && <NavBar classes={classes} />}
+        
         <div className={classes.appWrapper}>
+          
           <Router>
+          {showNavbar && <NavBar classes={classes}  />}
             <Switch>
               <Route
                 path={ROUTERPATHS.ABOUT}
