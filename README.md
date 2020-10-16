@@ -40,14 +40,35 @@ Socket.listen("typing",()=>{/* DO SOMETHING WITH THE TYPING LIKE ... CHANGING TH
 ```
 
 TODO LIST: 
-1. We need to get an identifier from socket IO - we need to always render the messages of the current user on the left side, while rendering the messages of the other user on the right side
-2. ***Allow communication between 2 users***
-4. Navigation Bar (Icon on the left, HOME, ABOUT, on the right side EXIT icon which will lead the user back to the ROOT path, and NEXT button for the next conversation
-5. When leaving chat room => close socket connection (socket.disconnect() => show spinner + search for the next person)
-6. Advertisement: Facebook for business, google, SEO, data traffic, discord
+1. Navigation Bar (Icon on the left, HOME, ABOUT, on the right side EXIT icon which will lead the user back to the ROOT path, and NEXT button for the next conversation
+2. Advertisement: Facebook for business, google, SEO, data traffic, discord
 
-API:
-  1. When connection has established - We need to receive sender's name so frontend can display it in a few places (chatHeader, chatComposer placeholder ...)
-  2. When connection has established - Would be better if we can get that indication from somewhere else rather than socket.on('message')
-     maybe socket.connection, if it's not possible than at least we need to receive a boolean that indicates the connection - frontend need to show loading indicator meanwhile )
+
+---
+
+### Messages Format
+
+> Message
+```javascript
+Client.emit("message","my message") // for emitting as client
+Client.on("message",({body,sender:{id,name}})=>{...}) // for listeneing as client
+```
+
+> Typing
+```javascript
+Client.emit("typing") // for emitting as client
+Client.on("typing",({body,sender:{id,name}})=>{...}) // for listening as client
+Client.on("stop-typing",({body,sender:{id,name}})=>{...}) // for listening to stop typing event usually occours 5 secs after typing
+```
+
+> Matching made and chat room opened for two sides to debate on
+```javascript
+Client.on("match",({participants})=>{...}) // participants is {id,name}[] (array of objects that hold id and name) for now it only sends one participant but it supports more
+```
+
+> Someone disconnected
+```javascript
+Client.on("disconnect",()=>{}) // other side disconnected (usually you would like to move back to loading screen and restart the socket to get back to queue)
+```
+
   

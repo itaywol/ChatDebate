@@ -7,6 +7,7 @@ services:
       context: ./chat-backend
     ports:
       - $BACKEND_PORT:$BACKEND_PORT
+      - 9229:9229
       - $BACKEND_WS_PORT:$BACKEND_WS_PORT
     container_name: "${PROJECT_NAME}_backend"
     environment:
@@ -15,7 +16,7 @@ services:
     volumes:
       - /usr/src/app/node_modules
       - ./chat-backend/src:/usr/src/app/src
-    command: npm run start:dev
+    command: npm run start:debug
   frontend:
     image: itaywol/$PROJECT_NAME/frontend:latest
     build:
@@ -28,3 +29,11 @@ services:
       - ./frontend/src:/usr/src/app/src
     command: npm start 
     stdin_open: true
+  mongo:
+    image: mongo:latest
+    ports:
+      - $MONGO_PORT:$MONGO_PORT
+    volumes:
+      - "mongoData:/data/db"
+volumes:
+  mongoData:
