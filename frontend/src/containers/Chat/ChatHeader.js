@@ -1,16 +1,16 @@
 import React from "react";
 import { Typography } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
-import {STRINGS} from '../../../src/constants';
+import {STRINGS, SIDES} from '../../../src/constants';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from '@material-ui/core/Tooltip';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import {ROUTERPATHS} from '../../constants';
 
-const ChatHeader = ({ classes, nickname, side, typingString, history, setSide}) => {
+const ChatHeader = ({ classes, typingString, history, setSide, side, roomName }) => {
   
-  const opponentSide = side === STRINGS.LEFT_HEADER ? STRINGS.RIGHT_HEADER : STRINGS.LEFT_HEADER;
+  const opponentSide = side === SIDES.LEFT ? STRINGS.RIGHT_HEADER : STRINGS.LEFT_HEADER;
 
   const moveToRoot = () => {
     history.push(ROUTERPATHS.ROOT);
@@ -21,7 +21,7 @@ const ChatHeader = ({ classes, nickname, side, typingString, history, setSide}) 
     <div className={classes.headerWrapper}>
       <Avatar classes={{ root: classes.headerAvatar }}>T</Avatar>
       <div className={classes.headerContent}>
-        <Typography>Tom</Typography>
+        <Typography>{roomName}</Typography>
         <Typography style={{ color: "grey" }}>{typingString ? typingString : opponentSide}</Typography>
       </div>
 

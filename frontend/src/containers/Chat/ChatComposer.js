@@ -2,29 +2,26 @@ import React, { Component } from "react";
 import SendIcon from "@material-ui/icons/Send";
 import IconButton from "@material-ui/core/IconButton";
 import SentimentVerySatisfiedIcon from "@material-ui/icons/SentimentVerySatisfied";
-
+import { socket } from "../../socketUtils";
 class ChatComposer extends Component {
   state = {
     messageBody: "",
   };
 
-  // aaaaa = > ""
-  
   handleInputChange = (e) => {
     const updatedMessageBody = e.target.value;
-    if(this.state.messageBody !== updatedMessageBody && updatedMessageBody === "") {
-      // window.socket && window.socket.emit("typingDone");
-      // should be called from backend - whenever calling typing - after 4 seconds of timeout - invoke typingDone automatically from there
-    } else {
-      window.socket && window.socket.emit("typing");
-    }
+    const {typingString} = this.props;
+    // if(typingString === "") {
+    socket.emit("typing");
+    // }
+    
     this.setState({ messageBody: e.target.value });
   };
 
   sendMessage = (e) => {
     e.preventDefault();
     const { messageBody } = this.state;
-    window.socket.emit("message", messageBody);
+    socket.emit("message", messageBody);
     this.setState({ messageBody: "" });
   };
 

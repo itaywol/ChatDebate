@@ -93,9 +93,9 @@ export class WebrtcChatGateway
 
     this.server
       .to(Object.keys(client.rooms)[0])
-      .emit('message', { sender: name, body: payload });
+      .emit('message', { sender: name, senderId:client.id, body: payload });
 
-    return { sender: name,senderId:client.id, body: payload };
+    // return { sender: name,senderId:client.id, body: payload };
   }
 
   @SubscribeMessage('typing')

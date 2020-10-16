@@ -77,8 +77,8 @@ export class RoomsService {
               );
               amountToRemoveFromQueues++;
             } else {
-              partyQueues[0].push(partyQueues[0].splice(index,1)[0])
-              partyQueues[1].push(partyQueues[1].splice(index,1)[0])
+              partyQueues[0].push(partyQueues[0].splice(index, 1)[0]);
+              partyQueues[1].push(partyQueues[1].splice(index, 1)[0]);
             }
           });
           partyQueues[0].splice(0, amountToRemoveFromQueues);
@@ -94,20 +94,16 @@ export class RoomsService {
     const newPrivateRoom = uuidv4();
     client1.join(newPrivateRoom);
     client2.join(newPrivateRoom);
-    client1
-      .to(newPrivateRoom)
-      .emit('connect', {
-        sender: client1.handshake.query.name,
-        senderId: client1.id,
-        body: 'Hey there my name is ' + client1.handshake.query.name,
-      });
-    client2
-      .to(newPrivateRoom)
-      .emit('connect', {
-        sender: client2.handshake.query.name,
-        senderId: client2.id,
-        body: 'Hey there my name is ' + client2.handshake.query.name,
-      });
+    client1.to(newPrivateRoom).emit('match', {
+      sender: client1.handshake.query.name,
+      senderId: client1.id,
+      body: 'Hey there my name is ' + client1.handshake.query.name,
+    });
+    client2.to(newPrivateRoom).emit('match', {
+      sender: client2.handshake.query.name,
+      senderId: client2.id,
+      body: 'Hey there my name is ' + client2.handshake.query.name,
+    });
   }
 
   public removeClient(client: ChatSocket) {

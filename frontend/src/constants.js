@@ -1,5 +1,6 @@
 //ROUTES PATHS
 export const ROUTERPATHS = {
+  ABOUT: "/about",
   CHAT: "/chat",
   ROOT: "/",
 };
@@ -7,12 +8,12 @@ export const ROUTERPATHS = {
 export const SIDES = {
   LEFT: "dems",
   RIGHT: "reps",
-}
+};
 
 export const STRINGS = {
   LEFT_HEADER: "Democrate",
   RIGHT_HEADER: "Republican",
-}
+};
 
 // NOTIFICATIONS
 // export const NOTIFICATION_TYPES = {

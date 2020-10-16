@@ -6,21 +6,23 @@ import Chat from "./containers/Chat/Chat";
 import NavBar from "./containers/Navigation/NavBar";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ROUTERPATHS } from "./constants";
-
+import About from "./containers/About";
 class App extends Component {
   state = {
     nickname: "",
     side: "",
-    showNavbar: true
+    showNavbar: true,
+    activeId: "",
   };
 
   setNickname = (nickname) => this.setState({ nickname });
   setSide = (side) => this.setState({ side });
-  hideNavBar = () => this.setState({showNavbar: false})
+  hideNavBar = () => this.setState({ showNavbar: false });
+  setActiveId = (activeId) => this.setState({ activeId });
 
   render() {
     const { classes } = this.props;
-    const { nickname, side, showNavbar } = this.state;
+    const { nickname, side, showNavbar, activeId } = this.state;
     return (
       <div
         style={{
@@ -31,10 +33,14 @@ class App extends Component {
           flexDirection: "column",
         }}
       >
-        { showNavbar && <NavBar classes={classes} />}
+        {showNavbar && <NavBar classes={classes} />}
         <div className={classes.appWrapper}>
           <Router>
             <Switch>
+              <Route
+                path={ROUTERPATHS.ABOUT}
+                render={() => <About classes={classes} />}
+              />
               <Route
                 path={ROUTERPATHS.CHAT}
                 render={(props) => (
@@ -44,6 +50,8 @@ class App extends Component {
                     side={side}
                     hideNavBar={this.hideNavBar}
                     setSide={this.setSide}
+                    activeId={activeId}
+                    setActiveId={this.setActiveId}
                     {...props}
                   />
                 )}
@@ -57,6 +65,8 @@ class App extends Component {
                     side={side}
                     setNickname={this.setNickname}
                     setSide={this.setSide}
+                    activeId={activeId}
+                    setActiveId={this.setActiveId}
                     {...props}
                   />
                 )}

@@ -3,7 +3,7 @@ import { Typography } from "@material-ui/core";
 import ChatAsCard from "../components/ChatAsCard";
 import { ROUTERPATHS, SIDES } from "../constants";
 import { Button, TextField, FormControl } from "@material-ui/core";
-import io from "socket.io-client";
+import { socket, initSocket } from "../socketUtils";
 import SVG from "../assets/icons";
 
 const ChatAs = ({
@@ -16,6 +16,8 @@ const ChatAs = ({
   side,
   setNickname,
   setSide,
+  setActiveId,
+  activeId,
 }) => {
   // const renewChat = (e) => {
 
@@ -35,12 +37,11 @@ const ChatAs = ({
       return console.log("ERROR - SIDE");
     }
 
-    const url = `ws://localhost:4001/chat?room=demsvsreps&party=${side}&name=${nickname}`;
-    const socket = io.connect(url);
-    window.socket = socket;
+    initSocket({ nickname, side });
 
-    window.socket.on("connect", function () {
-      console.log("connected");
+    socket.on("connect", () => {
+      console.log("connect - data", socket);
+      setActiveId(socket.id);
     });
 
     history.push(ROUTERPATHS.CHAT);

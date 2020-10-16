@@ -15,6 +15,19 @@ const useStyles = (theme) => ({
     width: "100%",
     overflowX: "hidden",
   },
+
+  // About.js
+  aboutWrapper: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: "0px 30%",
+
+    "& p": {
+      marginTop: 10,
+    },
+  },
   //ChatAs.js
   chatAsWrapper: {
     display: "flex",
@@ -22,7 +35,7 @@ const useStyles = (theme) => ({
     justifyContent: "center",
     alignItems: "center",
     backgroundImage:
-      `url(` + require(`../assets/backgrounds/ChatAsWhitejpg.jpg`) + `)`,
+      `url(` + require(`../assets/backgrounds/AmericanFlag.jpg`) + `)`,
     backgroundRepeat: "no-repeat",
     // backgroundAttachment: "fixed",
     backgroundSize: "cover",
