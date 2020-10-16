@@ -40,14 +40,20 @@ Socket.listen("typing",()=>{/* DO SOMETHING WITH THE TYPING LIKE ... CHANGING TH
 ```
 
 TODO LIST: 
-1. We need to get an identifier from socket IO - we need to always render the messages of the current user on the left side, while rendering the messages of the other user on the right side
-2. ***Allow communication between 2 users***
-4. Navigation Bar (Icon on the left, HOME, ABOUT, on the right side EXIT icon which will lead the user back to the ROOT path, and NEXT button for the next conversation
-5. When leaving chat room => close socket connection (socket.disconnect() => show spinner + search for the next person)
-6. Advertisement: Facebook for business, google, SEO, data traffic, discord
-
-API:
-  1. When connection has established - We need to receive sender's name so frontend can display it in a few places (chatHeader, chatComposer placeholder ...)
-  2. When connection has established - Would be better if we can get that indication from somewhere else rather than socket.on('message')
-     maybe socket.connection, if it's not possible than at least we need to receive a boolean that indicates the connection - frontend need to show loading indicator meanwhile )
-  
+1. Make the chat appear in a center bubble. Eden.
+  1.1 in the margin we will add Ads. Need to look at YNET advertisments to see the HTML syntax used. Omer with Eden.
+2. Pureify the different inputs. Critical. Eden
+3. Create three pages:
+  3.1 "About" - Insert the paragraph uploaded to Discords. Eden.
+  3.2 "How to build an argument" - Eden.Omer will send content
+  3.3 "Rooms" - a drop down list that will include only Republicans vs Democrats for now. will work on design later. Eden.
+  3.4 For each - Omer will send a background.
+4. Create a DB (Mongo/postgreSQL). including two tables:
+  4.1 - Debaters information (as written in Whatsapp - later to be added to here.)
+  4.2 - most common words used. Words and counter
+5. Saving the conversation each socket,disconnect in a textfile on the server. This is for lateral analysis.
+  5.1 - upload then words andalyzer script. make it work with the DB. Omer.
+6. Opening accounts - Omer:
+  6.1 - Amazon cloud
+  6.2 Facebook business account.
+7. Upload and run the server. ALL.
