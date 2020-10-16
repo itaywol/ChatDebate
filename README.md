@@ -54,6 +54,6 @@ TODO LIST:
 5. Saving the conversation each socket,disconnect in a textfile on the server. This is for lateral analysis.
   5.1 - upload then words andalyzer script. make it work with the DB. Omer.
 6. Opening accounts - Omer:
-  6.1 - Amazon cloud
+  6.1 - C2 server.
   6.2 Facebook business account.
 7. Upload and run the server. ALL.
