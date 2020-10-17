@@ -4,6 +4,7 @@ import MessageBox from "./MessageBox";
 import ChatComposer from "./ChatComposer";
 import Loader from "../../components/Loader";
 import { socket } from "../../socketUtils";
+import ChatDrawer from "./ChatDrawer";
 class Chat extends Component {
   constructor(props) {
     super(props);
@@ -11,7 +12,8 @@ class Chat extends Component {
       typingString: "",
       loading: true,
       messages: [],
-      roomName: ""
+      roomName: "",
+      isDrawerOpen: true
     };
 
     socket.on("match", (data) => {
@@ -19,7 +21,11 @@ class Chat extends Component {
       let updatedMessages = [];
       updatedMessages.push(data);
 
-      this.setState({ loading: false, messages: updatedMessages, roomName: data.sender });
+      this.setState({
+        loading: false,
+        messages: updatedMessages,
+        roomName: data.sender,
+      });
     });
 
     socket.on("typing", ({ sender, body, senderId }) => {
@@ -38,8 +44,12 @@ class Chat extends Component {
   }
 
   setMessages = (messages) => {
-    this.setState({messages})
-  }
+    this.setState({ messages });
+  };
+
+  toggleDrawer = () => {
+    this.setState({isDrawerOpen: !this.state.isDrawerOpen})
+}
 
   componentDidMount() {
     this.props.hideNavBar();
@@ -47,40 +57,48 @@ class Chat extends Component {
 
   render() {
     const { classes, nickname, side, history, setSide, activeId } = this.props;
-    const { typingString, loading, messages, roomName } = this.state;
+    const { typingString, loading, messages, roomName, isDrawerOpen} = this.state;
 
-    // if (loading) {
-    //   return 
-    // }
+    const contentStyle = {  transition: 'margin-left 450ms cubic-bezier(0.23, 1, 0.32, 1)' };
+    
+    if (this.state.isDrawerOpen) {
+      contentStyle.marginLeft = 300;
+    }
 
-    return (
-      
-      <div className={classes.chatWrapper}>
-        {loading && <Loader label={"Loading Page"} />}
-        <Header
-          classes={classes}
-          nickname={nickname}
-          side={side}
-          typingString={typingString}
-          history={history}
-          setSide={setSide}
-          roomName={roomName}
-        />
-        <MessageBox
-          classes={classes}
-          nickname={nickname}
-          side={side}
-          messages={messages}
-          setMessages={this.setMessages}
-          activeId={activeId}
-        />
-        <ChatComposer
-          classes={classes}
-          nickname={nickname}
-          side={side}
-          typingString={typingString}
-        />
-      </div>
+    return (  
+        <div className={classes.chatWrapper}>
+          {/* {loading && <Loader label={"Searching for an opponent ..."} />} */}
+          <div style={{contentStyle , height: "100%", width: "100%", display: "flex", flexDirection: 'column', marginRight: isDrawerOpen ? "300px" : "0px"}}>
+            <Header
+              classes={classes}
+              nickname={nickname}
+              side={side}
+              typingString={typingString}
+              history={history}
+              setSide={setSide}
+              roomName={roomName}
+              toggleDrawer={this.toggleDrawer}
+            />
+            <MessageBox
+              classes={classes}
+              nickname={nickname}
+              side={side}
+              messages={messages}
+              setMessages={this.setMessages}
+              activeId={activeId}
+            />
+            <ChatComposer
+              classes={classes}
+              nickname={nickname}
+              side={side}
+              typingString={typingString}
+            />
+          </div>
+          <ChatDrawer classes={classes} isDrawerOpen={isDrawerOpen} toggleDrawer={this.toggleDrawer} />
+        </div>
+
+        
+
     );
   }
 }

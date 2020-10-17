@@ -125,7 +125,6 @@ const useStyles = (theme) => ({
     height: "inherit",
     width: "inherit",
     display: "flex",
-    flexDirection: "column",
   },
   // Header.js
   headerWrapper: {
@@ -134,7 +133,7 @@ const useStyles = (theme) => ({
     alignItems: "center",
     height: 60,
     width: "100%",
-    borderBottom: "1px solid grey",
+    borderBottom: `1px solid ${theme.border.primary}`,
   },
   headerAvatar: {
     width: 35,
@@ -179,7 +178,7 @@ const useStyles = (theme) => ({
     width: "100%",
     minHeight: 50,
     maxHeight: 80,
-    borderTop: "1px solid grey",
+    borderTop: `1px solid ${theme.border.primary}`,
     background: "lightgrey",
     display: "flex",
     justifyContent: "center",
@@ -225,6 +224,11 @@ const useStyles = (theme) => ({
     cursor: "pointer",
     paddingLeft: 20,
   },
+  // Notes
+  notesDrawer: {
+    width: 300
+  },
+
 });
 
 export default useStyles;

@@ -8,7 +8,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import {ROUTERPATHS} from '../../constants';
 
-const ChatHeader = ({ classes, typingString, history, setSide, side, roomName }) => {
+const ChatHeader = ({ classes, typingString, history, setSide, side, roomName, toggleDrawer }) => {
   
   const opponentSide = side === SIDES.LEFT ? STRINGS.RIGHT_HEADER : STRINGS.LEFT_HEADER;
 
@@ -37,6 +37,14 @@ const ChatHeader = ({ classes, typingString, history, setSide, side, roomName })
         <Tooltip title="Disconnect">
           <div>
           <IconButton onClick={moveToRoot}>
+            <ExitToAppIcon />
+          </IconButton>
+          </div>
+        </Tooltip>
+
+        <Tooltip title="Drawer">
+          <div>
+          <IconButton onClick={toggleDrawer}>
             <ExitToAppIcon />
           </IconButton>
           </div>

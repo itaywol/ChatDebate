@@ -22,6 +22,9 @@ const lightTheme = createMuiTheme({
       '"Segoe UI Symbol"',
     ].join(","),
   },
+  border: {
+    primary: 'rgba(0, 0, 0, 0.12)'
+  }
 });
 
 export default lightTheme;

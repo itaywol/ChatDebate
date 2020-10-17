@@ -34,6 +34,7 @@ class ChatComposer extends Component {
   render() {
     const { classes } = this.props;
     const { messageBody } = this.state;
+
     return (
       <div className={classes.ChatComposerWrapper}>
         <div className={classes.chatComposerContent}>
