@@ -76,16 +76,16 @@ const useStyles = (theme) => ({
     marginTop: 25,
   },
   chatAsLeft: {
-    '&:hover': {
+    "&:hover": {
       background: "#0278ae",
-      color: "#fff"
-    }
+      color: "#fff",
+    },
   },
   chatAsRight: {
-    '&:hover': {
+    "&:hover": {
       background: "#bb2205",
-      color: "#fff"
-    }
+      color: "#fff",
+    },
   },
   chatAsSelected: {
     color: "red",
@@ -218,17 +218,24 @@ const useStyles = (theme) => ({
     background: "grey",
   },
   navBarToolbar: {
-    top: 0
+    top: 0,
   },
   navItem: {
     cursor: "pointer",
     paddingLeft: 20,
   },
+
+  // ChatDrawer
+  drawerHeader: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "0px 5px",
+  },
   // Notes
   notesDrawer: {
-    width: 300
+    width: 300,
   },
-
 });
 
 export default useStyles;

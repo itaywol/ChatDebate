@@ -17,7 +17,9 @@ class App extends Component {
 
   setNickname = (nickname) => this.setState({ nickname });
   setSide = (side) => this.setState({ side });
-  hideNavBar = () => this.setState({ showNavbar: false });
+  setNavBar = (bool) => {
+    this.setState({ showNavbar: bool })
+  };
   setActiveId = (activeId) => this.setState({ activeId });
 
   render() {
@@ -50,7 +52,7 @@ class App extends Component {
                     classes={classes}
                     nickname={nickname}
                     side={side}
-                    hideNavBar={this.hideNavBar}
+                    setNavBar={this.setNavBar}
                     setSide={this.setSide}
                     activeId={activeId}
                     setActiveId={this.setActiveId}

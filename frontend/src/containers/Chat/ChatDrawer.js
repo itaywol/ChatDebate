@@ -14,6 +14,9 @@ import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
 import Notes from "./Notes";
+import HomeSharpIcon from "@material-ui/icons/HomeSharp";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import CreateSharpIcon from "@material-ui/icons/CreateSharp";
 class ChatDrawer extends Component {
   state = {
     isNotesOpen: false,
@@ -24,7 +27,7 @@ class ChatDrawer extends Component {
   };
 
   render() {
-    const { classes, toggleDrawer, isDrawerOpen } = this.props;
+    const { classes, toggleDrawer, isDrawerOpen, moveToRoot } = this.props;
     const { isNotesOpen } = this.state;
     return (
       <Drawer
@@ -36,33 +39,38 @@ class ChatDrawer extends Component {
         }}
       >
         <div className={classes.drawerHeader} style={{ height: 55 }}>
-          <IconButton onClick={toggleDrawer}>{<ChevronRightIcon />}</IconButton>
+          {/* <IconButton onClick={toggleDrawer}>{<ChevronRightIcon />}</IconButton> */}
+          <Typography variant="h5" style={{ fontSize: "1.2rem" }}>
+            Menu
+          </Typography>
         </div>
 
         <Divider />
         <List>
-          {["Home Page", "Next Opponent"].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+          <ListItem button onClick={moveToRoot}>
+            <ListItemIcon>
+              <HomeSharpIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Home Page"} />
+          </ListItem>
+          <ListItem button>
+            <ListItemIcon>
+            <ExitToAppIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Next Opponent"} />
+          </ListItem>
         </List>
         <Divider />
         <List>
-          {["Notes"].map((text, index) => (
-            <ListItem button key={text} onClick={this.toggleNotes}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+          <ListItem button onClick={this.toggleNotes}>
+            <ListItemIcon>
+              <CreateSharpIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Notes"} />
+          </ListItem>
         </List>
 
-        {isNotesOpen && <Notes classes={classes} isNotesOpen={isNotesOpen} />}
+        <Notes classes={classes} isNotesOpen={isNotesOpen}  />
       </Drawer>
     );
   }

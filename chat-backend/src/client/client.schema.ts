@@ -3,7 +3,6 @@ import { Document, Model } from 'mongoose';
 import { ChatClient } from './client';
 export type ClientDocument = Client & Document;
 
-
 // The schema of the user add/remove fields
 @Schema()
 export class Client {
@@ -25,12 +24,11 @@ export class Client {
 
 export const ClientSchema = SchemaFactory.createForClass(Client);
 
-
 /*
-*
-* The main function to save user data
-*
-*/
+ *
+ * The main function to save user data
+ *
+ */
 export function createUserEntryInDB(
   client: ChatClient,
   model: Model<ClientDocument>,
