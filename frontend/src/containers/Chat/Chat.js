@@ -17,39 +17,54 @@ class Chat extends Component {
       isDrawerOpen: true,
     };
 
+    //Data is array of objects [{id,name}]
     socket.on("match", (data) => {
       console.log("match - data", data);
-      let updatedMessages = [];
-      updatedMessages.push(data);
+      if (data?.length > 0) {
+        let updatedMessages = [];
+        updatedMessages.push({
+          sender: data[0]?.name,
+          body: "Hey i am " + data[0]?.name,
+        });
 
-      this.setState({
-        loading: false,
-        messages: updatedMessages,
-        roomName: data.sender,
-      });
-    });
-
-    socket.on("typing", ({ sender, body, senderId }) => {
-      const { activeId } = this.props;
-      if (senderId !== activeId) {
-        this.setState({ typingString: `${body}...` });
+        this.setState({
+          loading: false,
+          messages: updatedMessages,
+          roomName: data[0].name,
+        });
       }
     });
 
-    socket.on("stop-typing", ({ sender, body, senderId }) => {
+    socket.on("typing", ({ sender: { id, name }, body }) => {
       const { activeId } = this.props;
-      if (senderId !== activeId) {
-        this.setState({ typingString: "" });
+      if (id !== activeId) {
+        this.setState((prevState) => ({
+          ...prevState,
+          typingString: `${body}...`,
+        }));
+      }
+    });
+
+    socket.on("stop-typing", ({ sender: { id, name }, body }) => {
+      const { activeId } = this.props;
+      if (id !== activeId) {
+        this.setState((prevState) => ({ ...prevState, typingString: "" }));
       }
     });
   }
 
   setMessages = (messages) => {
-    this.setState({ messages });
+    this.setState((prevState) => ({
+      ...prevState,
+      messages: [...prevState.messages, messages],
+    }));
   };
 
   toggleDrawer = () => {
-    this.setState({ isDrawerOpen: !this.state.isDrawerOpen });
+    this.setState((prevState) => ({
+      ...prevState,
+      isDrawerOpen: !this.state.isDrawerOpen,
+    }));
   };
 
   componentDidMount() {
@@ -59,7 +74,7 @@ class Chat extends Component {
   moveToRoot = () => {
     const { history, setSide, setNavBar } = this.props;
     history.push(ROUTERPATHS.ROOT);
-    setNavBar(true)
+    setNavBar(true);
     setSide("");
   };
 

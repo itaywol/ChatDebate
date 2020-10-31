@@ -7,6 +7,7 @@ import { Server } from 'socket.io';
 import { ChatClient } from '../client/client';
 import { interval } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class SocketHandlersService {
@@ -55,6 +56,7 @@ export class SocketHandlersService {
     const response: FormattedMessageResponse = {
       body: payload,
       sender: { id, name },
+      uniqueMessageId:uuidv4()
     };
     server.to(Object.keys(client.rooms)[0]).emit('message', response);
   }
@@ -64,6 +66,7 @@ export class SocketHandlersService {
     const response: FormattedMessageResponse = {
       body: `${name} is typing...`,
       sender: { name, id },
+      uniqueMessageId:uuidv4()
     };
     server.to(Object.keys(client.rooms)[0]).emit('typing', response);
     interval(5000)

@@ -13,23 +13,26 @@ class MessageBox extends Component {
     this.messageBoxBottom = React.createRef();
 
     // getting msg object
-    socket.on("message", (data) => {
-      const {activeId} = this.props;
+    socket.on("message", ({ sender: { id, name }, body, uniqueMessageId }) => {
+      const { activeId } = this.props;
 
-      if (data.senderId !== activeId) {
-        console.log("ENTERED MESSAGE ON")
+      if (id !== activeId) {
+        console.log("ENTERED MESSAGE ON");
         const { messages, setMessages } = this.props;
-        let updatedMessages = [...messages];
-        updatedMessages.push(data);
-
-        setMessages(updatedMessages);
+        if (
+          messages.filter(
+            (messageData) => messageData.uniqueMessageId === uniqueMessageId
+          ).length === 0
+        ) {
+          setMessages({ sender: name, body, uniqueMessageId });
+        }
       }
     });
   }
 
   componentDidUpdate(prevProps, prevState) {
     const { shouldScrollBottom } = this.state;
-    const {messages} = this.props
+    const { messages } = this.props;
     if (messages.length !== prevProps.messages.length && shouldScrollBottom) {
       this.scrollToBottom();
     }
@@ -65,14 +68,13 @@ class MessageBox extends Component {
 
   render() {
     const { classes, messages } = this.props;
-    
 
     return (
       <div className={classes.messageBoxWrapper} onScroll={this.handleScroll}>
         <div style={{ position: "relative", paddingTop: 10 }}>
           {messages.map((msg) => (
             <Message
-              key={msg.senderId + msg.sender + msg.body}
+              key={msg.sender + msg.body}
               classes={classes}
               msgData={msg}
             />

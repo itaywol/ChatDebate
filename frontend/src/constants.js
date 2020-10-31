@@ -6,8 +6,8 @@ export const ROUTERPATHS = {
 };
 
 export const SIDES = {
-  LEFT: "dems",
-  RIGHT: "reps",
+  LEFT: "democrats",
+  RIGHT: "republicans",
 };
 
 export const STRINGS = {

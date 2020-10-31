@@ -17,6 +17,7 @@ export interface ClientJoinRequest {
 export interface FormattedMessageResponse {
   sender: BasicClientInfo;
   body: any;
+  uniqueMessageId: string
 }
 
 export interface FormattedMatchResponse {
