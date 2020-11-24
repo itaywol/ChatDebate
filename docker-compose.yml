@@ -15,7 +15,7 @@ services:
       WS_PORT: $BACKEND_WS_PORT
     volumes:
       - /usr/src/app/node_modules
-      - ./chat-backend/src:/usr/src/app/src
+      - ./chat-backend:/usr/src/app
     command: npm run start:debug
   frontend:
     image: itaywol/$PROJECT_NAME/frontend:latest
