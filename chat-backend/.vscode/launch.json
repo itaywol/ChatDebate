@@ -6,14 +6,14 @@
     "configurations": [
         {
             "protocol": "inspector",
-            "request": "launch",
+            "request": "attach",
             "address": "localhost",
             "port": 9229,
             "name": "Launch",
             "type": "node",
             "restart": true,
             "sourceMaps": true,
-            "remoteRoot": "/app",
+            "remoteRoot": "/app/src/app",
             "localRoot": "${workspaceFolder}"
         }
     ]

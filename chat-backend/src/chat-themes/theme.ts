@@ -33,7 +33,7 @@ export class Theme {
   listen() {
     this.matchingObservable = interval(
       EnvironmentService.MATCHING_INTERVAL,
-    ).subscribe(()=>this.match());
+    ).subscribe(() => this.match());
   }
 
   dispose() {
@@ -106,16 +106,26 @@ export class Theme {
     });
   }
 
-  popFromQueue(clientsQueue:ChatClient[]) {
-      return clientsQueue.splice(0,1)[0]
+  popFromQueue(clientsQueue: ChatClient[]) {
+    return clientsQueue.splice(0, 1)[0];
   }
 
   match() {
     if (this.clients[0]?.length > 0 && this.clients[1]?.length > 0) {
-      const shortestQueue = Math.min(this.clients[0].length,this.clients[1].length);
-      for(let index=0;index<shortestQueue;index++) {
-          const members = [this.popFromQueue(this.clients[0]),this.popFromQueue(this.clients[1])]
-          this.mergeClients(members)
+      const shortestQueue = Math.min(
+        this.clients[0].length,
+        this.clients[1].length,
+      );
+      for (let index = 0; index < shortestQueue; index++) {
+        let members = [
+          this.popFromQueue(this.clients[0]),
+          this.popFromQueue(this.clients[1]),
+        ];
+
+        members = members.filter(member => member.chatSocket.connected);
+
+        if (members.length === 2) this.mergeClients(members);
+        else members.map(member => this.requeClient(member));
       }
     }
   }
